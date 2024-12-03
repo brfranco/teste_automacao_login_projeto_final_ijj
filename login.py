@@ -1,8 +1,6 @@
 from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
 import time
 
 def login(url, username, password):
@@ -10,17 +8,16 @@ def login(url, username, password):
     driver.get(url)
     
     try:
-        # Esperar até que o campo de e-mail esteja presente e visível
-        user_field = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//input[@placeholder='Digite seu e-mail!']"))
-        )
+        # Esperar um pouco para garantir que a página carregou
+        time.sleep(5)
+        
+        # Encontrar e preencher o campo de e-mail
+        user_field = driver.find_element(By.XPATH, "//input[@placeholder='Digite seu e-mail!']")
         user_field.send_keys(username)
         print("Campo de e-mail encontrado e preenchido.")
         
-        # Esperar até que o campo de senha esteja presente e visível
-        password_field = WebDriverWait(driver, 10).until(
-            EC.visibility_of_element_located((By.XPATH, "//input[@type='password']"))
-        )
+        # Encontrar e preencher o campo de senha
+        password_field = driver.find_element(By.XPATH, "//input[@type='password']")
         password_field.send_keys(password)
         print("Campo de senha encontrado e preenchido.")
         
